@@ -2,6 +2,7 @@ plugins {
     id 'application'
     id 'org.graalvm.buildtools.native'
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    id 'groovy'
 }
 
 repositories {
@@ -21,9 +22,11 @@ dependencies {
     implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
     implementation 'com.amazonaws:aws-lambda-java-runtime-interface-client:2.1.1'
 
-    testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
-    testImplementation('org.junit.jupiter:junit-jupiter')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    testImplementation platform('org.spockframework:spock-bom:2.2-groovy-4.0')
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation 'org.apache.groovy:groovy-all:4.0.4'
 }
 
 graalvmNative {
