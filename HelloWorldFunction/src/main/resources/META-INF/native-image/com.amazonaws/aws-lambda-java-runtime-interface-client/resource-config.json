@@ -12,6 +12,30 @@
       },
       {
         "pattern": "\\Qx86_64/aws-lambda-runtime-interface-client.musl.so\\E"
+      },
+      {
+        "pattern": "\\QMETA-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat\\E"
+      },
+      {
+        "pattern": "\\QMETA-INF/services/org.apache.logging.log4j.core.util.ContextDataProvider\\E"
+      },
+      {
+        "pattern": "\\QMETA-INF/services/org.apache.logging.log4j.spi.Provider\\E"
+      },
+      {
+        "pattern": "\\QMETA-INF/services/org.apache.logging.log4j.message.ThreadDumpMessage$ThreadInfoFactory\\E"
+      },
+      {
+        "pattern": "\\QMETA-INF/services/org.apache.logging.log4j.util.PropertySource\\E"
+      },
+      {
+        "pattern": "\\Qlog4j2.xml\\E"
+      },
+      {
+        "pattern": "\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
+      },
+      {
+        "pattern": "\\QLog4j-charsets.properties\\E"
       }
     ]
   },

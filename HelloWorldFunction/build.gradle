@@ -2,7 +2,11 @@ plugins {
     id 'application'
     id 'org.graalvm.buildtools.native'
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    // For Spock
     id 'groovy'
+    // For AWS Lambda Powertools
+    id 'java'
+    id 'io.freefair.aspectj.post-compile-weaving' version '6.5.1'
 }
 
 repositories {
@@ -27,6 +31,8 @@ dependencies {
     testImplementation platform('org.spockframework:spock-bom:2.2-groovy-4.0')
     testImplementation 'org.spockframework:spock-core'
     testImplementation 'org.apache.groovy:groovy-all:4.0.4'
+
+    aspect 'software.amazon.lambda:powertools-logging:1.12.3'
 }
 
 graalvmNative {
@@ -45,12 +51,14 @@ test {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "16"
     }
 }
+sourceCompatibility = 16
+targetCompatibility = 16
 
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "16"
     }
 }
