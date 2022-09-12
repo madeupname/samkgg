@@ -9,7 +9,17 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse
  * Handler for requests to Lambda function.
  */
 class App : RequestHandler<APIGatewayV2HTTPEvent?, APIGatewayV2HTTPResponse> {
+    companion object {
+        @JvmStatic
+        val inputStream = App::class.java.getResourceAsStream("/logging.properties")
+        init {
+
+            System.out.println("logging.properties: $inputStream")
+        }
+    }
+
     override fun handleRequest(input: APIGatewayV2HTTPEvent?, context: Context?): APIGatewayV2HTTPResponse {
+
         val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         headers["X-Custom-Header"] = "application/json"
