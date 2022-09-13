@@ -12,6 +12,9 @@ Globals:
     Architectures:
       - x86_64
     Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+    Environment:
+      Variables:
+        LOGGER_REPLACE_NEWLINES: true
 
 Resources:
   HelloWorldFunction:

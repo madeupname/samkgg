@@ -1,0 +1,8 @@
+{
+  "Parameters": {
+    "LOGGER_REPLACE_NEWLINES": "false"
+  },
+  "HelloWorldFunction": {
+    "LOGGER_REPLACE_NEWLINES": "false"
+  }
+}
