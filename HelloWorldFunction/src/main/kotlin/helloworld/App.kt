@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse
 import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import java.util.logging.LogManager
 
 
@@ -18,17 +19,30 @@ class App : RequestHandler<APIGatewayV2HTTPEvent?, APIGatewayV2HTTPResponse> {
      * Must set the logging properties file here so CloudWatchFormatter is used.
      */
     companion object {
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+
         init {
-            LogManager.getLogManager().readConfiguration(App::class.java.getResourceAsStream("/logging.properties"))
+            var configFile: String
+            try {
+                configFile = System.getenv("LOGGING_PROPERTIES")
+                if (!configFile.endsWith("logging.properties")) {
+                    throw IllegalArgumentException("LOGGING_PROPERTIES environment variable must contain a resource name that ends in logging.properties")
+                }
+                println("LOGGING_PROPERTIES = $configFile")
+            } catch (ex: Exception) {
+                configFile = "logging.properties"
+            }
+            LogManager.getLogManager().readConfiguration(App::class.java.getResourceAsStream("/$configFile"))
         }
     }
 
-    val logger = LoggerFactory.getLogger(App::class.java.name)
-    var gson = GsonBuilder().setPrettyPrinting().create()
+    private val logger = LoggerFactory.getLogger(App::class.java.name)
 
     override fun handleRequest(input: APIGatewayV2HTTPEvent?, context: Context?): APIGatewayV2HTTPResponse {
-        logger.info("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()))
-        logger.error("This is an error.")
+        // Store the AWS Request ID in MDC (a thread-bound map) so the logger can access it
+        MDC.getMDCAdapter().put("AWSRequestId", context?.awsRequestId)
+        logger.debug("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()))
         val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         headers["X-Custom-Header"] = "application/json"

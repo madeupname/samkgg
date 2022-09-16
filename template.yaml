@@ -14,7 +14,7 @@ Globals:
     Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
     Environment:
       Variables:
-        LOGGER_REPLACE_NEWLINES: true
+        LOGGING_PROPERTIES: development-logging.properties
 
 Resources:
   HelloWorldFunction:

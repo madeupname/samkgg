@@ -41,7 +41,7 @@ graalvmNative {
 
 test {
     useJUnitPlatform()
-    environment "LOGGER_REPLACE_NEWLINES", "false"
+    environment "LOGGING_PROPERTIES", "development-logging.properties"
 }
 
 compileKotlin {

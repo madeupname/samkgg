@@ -1,8 +1,8 @@
 {
   "Parameters": {
-    "LOGGER_REPLACE_NEWLINES": "false"
+    "LOGGING_PROPERTIES": "development-logging.properties"
   },
   "HelloWorldFunction": {
-    "LOGGER_REPLACE_NEWLINES": "false"
+    "LOGGING_PROPERTIES": "development-logging.properties"
   }
 }
