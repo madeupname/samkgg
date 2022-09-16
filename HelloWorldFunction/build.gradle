@@ -21,9 +21,12 @@ dependencies {
     implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
     implementation 'com.amazonaws:aws-lambda-java-runtime-interface-client:2.1.1'
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    implementation 'org.slf4j:slf4j-jdk14:1.7.25'
+
     testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
     testImplementation('org.junit.jupiter:junit-jupiter')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 graalvmNative {
@@ -38,6 +41,7 @@ graalvmNative {
 
 test {
     useJUnitPlatform()
+    environment "LOGGING_PROPERTIES", "development-logging.properties"
 }
 
 compileKotlin {

@@ -1,0 +1,8 @@
+{
+  "Parameters": {
+    "LOGGING_PROPERTIES": "development-logging.properties"
+  },
+  "HelloWorldFunction": {
+    "LOGGING_PROPERTIES": "development-logging.properties"
+  }
+}
