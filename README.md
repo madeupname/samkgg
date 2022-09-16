@@ -3,11 +3,10 @@
 This project aims to demonstrate and document an AWS Lambda project using the above technologies as they are not yet common.
 It is a "learning in public" project. If you're interested in learning these technologies, follow along. If you're 
 experienced and see anything that is not appropriate for a production SAM application, please point it out. No ego 
-here.
+here.   
 
-[How and why these technologies were selected.](https://philip.yurchuk.com/software/samkgg-aws-sam-kotlin-graalvm-gradle/)
-
-[Lessons Learned](https://github.com/madeupname/samkgg/wiki)
+The goal of this project is to document how to overcome the rough edges and steep learning curve when using Java and 
+GraalVM with Lambda. I'm also running Windows which is probably hard mode. 
 
 ### Documentation
 
@@ -19,8 +18,6 @@ I have all Java-related tooling installed via [SDKMAN](https://sdkman.io/). It e
 * [Gradle](https://gradle.org) version 7.3.3
 * [GraalVM Gradle Plugin](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
 * [Kotlin](https://kotlinlang.org) version 1.7.10 (on JDK 17)
-* [Spock](https://docs.spockframework.org/)
-* [Groovy](https://groovy-lang.org)
 * [Docker](https://docs.docker.com/) 
 * [Windows Subsystem for Linux (WSL) 2](https://docs.microsoft.com/en-us/windows/wsl/setup/environment) for running Docker on Windows
 
@@ -65,6 +62,15 @@ master branch. When a new CLI is released, it appears to pick up the latest temp
 * In IntelliJ, manually added the HelloWorldFunction directory to Gradle config (just click + and select it in the tool window).
 * Converted App.java to Kotlin. Removed code to call external service since it adds unnecessary run time.
 * Set language levels to JVM 17 and Kotlin 1.7.
+
+### FYI
+* IntelliJ will grumble about not having Gradle files in the root, but it looks like there is no way to make this a traditional Gradle multi-project build. Each function needs its own Gradle build. 
+   * https://github.com/aws/aws-sam-cli/issues/3227
+* In lieu of a multi-project build, you can add more build logic in via Makefiles. Yes, Makefiles: https://makefiletutorial.com
+* Despite the GraalVM term "native image" the SAM package type is still zip. Hence, Lambda layers are allowed. 
+* Similarly, the use-container flag passed to "sam build" means it is going to build the functions inside a Docker container. Since it's building a binary for a specific platform, the build runs in that target platform with the necessary dependencies.
+* The Kotlin stdlib JDK 8 dependency threw me, but that's the latest version. It still works with JVM 17 targets. 
+    * Explained here: https://mbonnin.medium.com/the-different-kotlin-stdlibs-explained-83d7c6bf293 
 
 ## Original README
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It 
