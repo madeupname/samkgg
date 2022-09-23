@@ -3,6 +3,17 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   samkgg
 
+Parameters:
+  # Only reasonable way to have multiple environments is entirely separate CFN stacks for each
+  Env:
+    Type: String
+    Default: Dev
+    AllowedValues:
+      - Dev
+      - Prod
+      - Local
+    Description: Enter Local, Dev, or Prod - Dev is the default.
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -14,7 +25,9 @@ Globals:
     Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
     Environment:
       Variables:
-        LOGGING_PROPERTIES: development-logging.properties
+        APP_ENV: !Ref Env
+        LOGGING_PROPERTIES: logging.properties
+        DYNAMODB_ENDPOINT: "" # only used when running locally
 
 Resources:
   HelloWorldFunction:

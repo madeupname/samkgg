@@ -1,8 +1,10 @@
 {
   "Parameters": {
+    "DYNAMODB_ENDPOINT": "http://192.168.0.132:8000",
     "LOGGING_PROPERTIES": "development-logging.properties"
   },
   "HelloWorldFunction": {
+    "DYNAMODB_ENDPOINT": "http://192.168.0.132:8000",
     "LOGGING_PROPERTIES": "development-logging.properties"
   }
 }

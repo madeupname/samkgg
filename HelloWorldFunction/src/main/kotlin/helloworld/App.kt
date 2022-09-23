@@ -5,9 +5,8 @@ import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse
-import org.slf4j.LoggerFactory
+import helloworld.data.SetupDB
 import org.slf4j.MDC
-import java.util.logging.LogManager
 
 
 /**
@@ -19,30 +18,17 @@ class App : RequestHandler<APIGatewayV2HTTPEvent?, APIGatewayV2HTTPResponse> {
      * Must set the logging properties file here so CloudWatchFormatter is used.
      */
     companion object {
-
         val gson = GsonBuilder().setPrettyPrinting().create()
-
-        init {
-            var configFile: String
-            try {
-                configFile = System.getenv("LOGGING_PROPERTIES")
-                if (!configFile.endsWith("logging.properties")) {
-                    throw IllegalArgumentException("LOGGING_PROPERTIES environment variable must contain a resource name that ends in logging.properties")
-                }
-                println("LOGGING_PROPERTIES = $configFile")
-            } catch (ex: Exception) {
-                configFile = "logging.properties"
-            }
-            LogManager.getLogManager().readConfiguration(App::class.java.getResourceAsStream("/$configFile"))
-        }
     }
 
-    private val logger = LoggerFactory.getLogger(App::class.java.name)
+    private val logger = Config.getLogger(App::class.java.name)
 
     override fun handleRequest(input: APIGatewayV2HTTPEvent?, context: Context?): APIGatewayV2HTTPResponse {
+
         // Store the AWS Request ID in MDC (a thread-bound map) so the logger can access it
         MDC.getMDCAdapter().put("AWSRequestId", context?.awsRequestId)
         logger.debug("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()))
+        SetupDB.setupCustomerTable()
         val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         headers["X-Custom-Header"] = "application/json"

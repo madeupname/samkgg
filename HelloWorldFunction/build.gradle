@@ -21,6 +21,10 @@ dependencies {
     implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
     implementation 'com.amazonaws:aws-lambda-java-runtime-interface-client:2.1.1'
 
+    implementation platform('software.amazon.awssdk:bom:2.17.275')
+    implementation 'software.amazon.awssdk:dynamodb'
+    implementation 'software.amazon.awssdk:dynamodb-enhanced'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
     implementation 'org.slf4j:slf4j-jdk14:1.7.25'
